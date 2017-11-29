@@ -6,6 +6,7 @@ import com.sheng.spring.service.impl.NormalMethodService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author shengxingyue, created on 2017/11/29
@@ -14,17 +15,15 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.sheng.spring")
 public class DemoConfig {
 
-    /**
-     * spring 方式指定生命周期方法
-     * @return
-     */
-    @Bean(initMethod = "init", destroyMethod = "destroy")
+    @Bean
+    @Profile("dev")
     public HelloService helloService() {
-        return new HelloServiceImpl();
+        return new HelloServiceImpl("dev");
     }
 
     @Bean
-    public NormalMethodService normalMethodService() {
-        return new NormalMethodService();
+    @Profile("prod")
+    public HelloService helloService2() {
+        return new HelloServiceImpl("prod");
     }
 }

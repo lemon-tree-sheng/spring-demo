@@ -7,18 +7,15 @@ import com.sheng.spring.service.HelloService;
  */
 public class HelloServiceImpl implements HelloService {
 
+    private String name;
+
+    public HelloServiceImpl(String name) {
+        this.name = name;
+    }
+
     @Override
     public void sayHello(String name) {
-        System.out.println("hello," + name);
+        System.out.println("hello," + this.name);
     }
 
-    @Override
-    public void init() {
-        System.out.println("bean 创建");
-    }
-
-    @Override
-    public void destroy() {
-        System.out.println("bean 销毁");
-    }
 }

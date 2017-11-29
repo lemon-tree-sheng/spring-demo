@@ -12,14 +12,13 @@ import java.io.IOException;
 public class DemoService {
 
     public static void main(String[] args) throws IOException {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(DemoConfig.class);
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext();
+
+        ac.getEnvironment().setActiveProfiles("dev");
+        ac.register(DemoConfig.class);
+        ac.refresh();
 
         HelloService helloService = ac.getBean(HelloService.class);
         helloService.sayHello("sheng");
-
-        NormalMethodService normalMethodService = ac.getBean(NormalMethodService.class);
-        normalMethodService.add();
-
-        ac.close();
     }
 }

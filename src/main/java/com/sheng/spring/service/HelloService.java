@@ -7,7 +7,4 @@ public interface HelloService {
 
     void sayHello(String name);
 
-    void init();
-
-    void destroy();
 }
