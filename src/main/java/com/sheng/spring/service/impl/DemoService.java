@@ -10,8 +10,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class DemoService {
 
     public static void main(String[] args) {
+        /**
+         * 正常调用
+         */
         ApplicationContext ac = new AnnotationConfigApplicationContext(DemoConfig.class);
-        UseHelloService helloService = ac.getBean(UseHelloService.class);
-        helloService.sayHello();
+        NormalMethodService normalMethodService = ac.getBean(NormalMethodService.class);
+        normalMethodService.add();
+
+        AnnotaionMethodService annotaionMethodService = ac.getBean(AnnotaionMethodService.class);
+        annotaionMethodService.add();
+
     }
 }
