@@ -1,62 +1,30 @@
 package com.sheng.spring.config;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.sheng.spring.service.HelloService;
+import com.sheng.spring.service.impl.HelloServiceImpl;
+import com.sheng.spring.service.impl.NormalMethodService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-
-import java.io.IOException;
 
 /**
  * @author shengxingyue, created on 2017/11/29
  */
 @Configuration
 @ComponentScan(basePackages = "com.sheng.spring")
-@PropertySource("classpath:test.properties")
 public class DemoConfig {
-    @Value("I Love You")
-    private String normal;
 
-    @Value("#{systemProperties['os.name']}")
-    private String osName;
-
-    @Value("#{T(java.lang.Math).random() * 100.0}")
-    private double randomNumber;
-
-    @Value("#{helloServiceImpl.name}")
-    private String otherName;
-
-    @Value("classpath:test.txt")
-    private Resource testFile;
-
-    @Value("http://www.baidu.com")
-    private Resource testUrl;
-
-    @Value("${book.name}")
-    private String bookName;
-
-    @Autowired
-    private Environment environment;
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
+    /**
+     * spring 方式指定生命周期方法
+     * @return
+     */
+    @Bean(initMethod = "init", destroyMethod = "destroy")
+    public HelloService helloService() {
+        return new HelloServiceImpl();
     }
 
-    public void outputResource() throws IOException {
-        System.out.println(normal);
-        System.out.println(osName);
-        System.out.println(randomNumber);
-        System.out.println(otherName);
-
-        System.out.println(IOUtils.toString(testFile.getInputStream()));
-        System.out.println(IOUtils.toString(testUrl.getInputStream()));
-        System.out.println(environment.getProperty("book.author"));
+    @Bean
+    public NormalMethodService normalMethodService() {
+        return new NormalMethodService();
     }
 }
