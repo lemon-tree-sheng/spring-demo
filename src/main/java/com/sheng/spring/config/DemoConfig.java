@@ -6,8 +6,10 @@ import com.sheng.spring.condition.MacBean;
 import com.sheng.spring.condition.MacCondition;
 import com.sheng.spring.condition.WindowsBean;
 import com.sheng.spring.condition.WindowsCondition;
+import com.sheng.spring.service.impl.UseHelloService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author shengxingyue, created on 2017/11/29
@@ -17,14 +19,14 @@ import org.springframework.context.annotation.Conditional;
 public class DemoConfig {
 
     @Bean
-    @Conditional(WindowsCondition.class)
-    public ListCmd windowsBean() {
-        return new WindowsBean();
+    @Profile("dev")
+    public UseHelloService useHelloService() {
+        return new UseHelloService("dev");
     }
 
     @Bean
-    @Conditional(MacCondition.class)
-    public ListCmd macBean() {
-        return new MacBean();
+    @Profile("pro")
+    public UseHelloService useHelloService2() {
+        return new UseHelloService("pro");
     }
 }
