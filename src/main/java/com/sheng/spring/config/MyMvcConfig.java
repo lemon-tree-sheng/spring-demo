@@ -1,9 +1,11 @@
 package com.sheng.spring.config;
 
+import com.sheng.spring.interceptor.TimeLogInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -27,6 +29,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         return internalResourceViewResolver;
     }
 
+    @Bean
+    public TimeLogInterceptor timeLogInterceptor() {
+        return new TimeLogInterceptor();
+    }
+
     /**
      * 配置静态文件访问
      * addResourceHandler：对外暴露的静态文件访问地址
@@ -37,5 +44,14 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+    }
+
+    /**
+     * 拦截器配置
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(timeLogInterceptor());
     }
 }
