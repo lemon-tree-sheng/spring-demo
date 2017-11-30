@@ -1,8 +1,10 @@
 package com.sheng.spring.service.impl;
 
-import com.sheng.spring.service.HelloService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author shengxingyue, created on 2017/11/29
@@ -10,14 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UseHelloService {
 
-    @Autowired
-    HelloService helloService;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
-    public void sayHello() {
-        helloService.sayHello("sheng");
+    @Scheduled(fixedRate = 5000)
+    public void taskOne() {
+        System.out.println("每隔5秒执行一次,现在时间：" + DATE_FORMAT.format(new Date()));
     }
 
-    public void setHelloService(HelloService helloService) {
-        this.helloService = helloService;
+    @Scheduled(cron = "0 20 11 ? * *")
+    public void taskTwo() {
+        System.out.println("11点18执行一次,现在时间：" + DATE_FORMAT.format(new Date()));
     }
 }
