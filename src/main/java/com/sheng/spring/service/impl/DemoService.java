@@ -1,5 +1,6 @@
 package com.sheng.spring.service.impl;
 
+import com.sheng.spring.condition.ListCmd;
 import com.sheng.spring.config.DemoConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,6 +13,8 @@ public class DemoService {
 
     public static void main(String[] args) throws IOException {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(DemoConfig.class);
-        UseHelloService useHelloService = ac.getBean(UseHelloService.class);
+
+        ListCmd listCmd = ac.getBean(ListCmd.class);
+        System.out.println(listCmd.listCmd());
     }
 }
