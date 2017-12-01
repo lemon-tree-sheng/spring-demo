@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HelloController {
 
-    @RequestMapping("/index")
-    public String hello() {
-        return "index";
-    }
-
     @RequestMapping("/advice")
     public void advice(DemoObj demoObj, @ModelAttribute("msg") String msg) {
         throw new IllegalArgumentException("参数异常,@ModelAttribute:" + msg);
