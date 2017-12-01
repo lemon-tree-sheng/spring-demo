@@ -4,6 +4,8 @@ import com.sheng.spring.interceptor.TimeLogInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -35,6 +37,13 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         return new TimeLogInterceptor();
     }
 
+    @Bean
+    public MultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1000000);
+        return multipartResolver;
+    }
+
     /**
      * 配置静态文件访问
      * addResourceHandler：对外暴露的静态文件访问地址
@@ -63,5 +72,6 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("/index");
+        registry.addViewController("/toUpload").setViewName("/upload");
     }
 }
